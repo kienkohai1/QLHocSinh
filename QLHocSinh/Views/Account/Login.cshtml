@@ -1,0 +1,31 @@
+﻿@model QLHocSinh.Models.LoginViewModel
+
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <div class="card shadow mt-5">
+            <div class="card-header bg-primary text-white">
+                <h3 class="text-center">Đăng Nhập</h3>
+            </div>
+            <div class="card-body">
+                <form asp-action="Login" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group mb-3">
+                        <label class="control-label">Tên đăng nhập</label>
+                        <input asp-for="Username" class="form-control" placeholder="Nhập username..." />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="control-label">Mật khẩu</label>
+                        <input asp-for="Password" type="password" class="form-control" placeholder="Nhập mật khẩu..." />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group mb-3 form-check">
+                        <input asp-for="RememberMe" class="form-check-input" />
+                        <label class="form-check-label">Ghi nhớ đăng nhập</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Đăng nhập</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

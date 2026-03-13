@@ -1,0 +1,36 @@
+﻿@model CreateUserViewModel
+
+<h2>Thêm người dùng mới</h2>
+
+<form asp-action="CreateUser" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="mb-3">
+        <label>Tên đăng nhập</label>
+        <input asp-for="Username" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Họ và tên</label>
+        <input asp-for="FullName" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Mật khẩu</label>
+        <input asp-for="Password" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label>Vai trò hệ thống</label>
+        <select asp-for="SelectedRole" asp-items="Model.RoleList" class="form-control">
+            <option value="">-- Chọn vai trò --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-success">Tạo người dùng</button>
+</form>

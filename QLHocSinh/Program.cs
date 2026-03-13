@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using QLHocSinh.Data;
 using QLHocSinh.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -32,6 +33,21 @@ builder.Services.ConfigureApplicationCookie(options => {
 });
 
 var app = builder.Build();
+// --- Đoạn code Seed Data bắt đầu ---
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        await DbSeeder.SeedRolesAndAdminAsync(services);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "Đã xảy ra lỗi khi Seed dữ liệu.");
+    }
+}
+// --- Đoạn code Seed Data kết thúc ---
 
 // --- 2. CẤU HÌNH PIPELINE (Sau builder.Build) ---
 
@@ -49,6 +65,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
 
 app.Run();
