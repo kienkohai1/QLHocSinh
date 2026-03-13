@@ -22,6 +22,27 @@ namespace QLHocSinh.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            // 1. Cấu hình cho bảng Grade: Khi xóa Student, không tự động xóa Grade (chống vòng lặp)
+            builder.Entity<Grade>()
+                .HasOne(g => g.Student)
+                .WithMany(s => s.Grades)
+                .HasForeignKey(g => g.StudentId)
+                .OnDelete(DeleteBehavior.Restrict); // Thay đổi ở đây
+
+            // 2. Cấu hình tương tự nếu bảng Grade có liên kết với Teacher
+            builder.Entity<Grade>()
+                .HasOne(g => g.Teacher)
+                .WithMany()
+                .HasForeignKey(g => g.TeacherId)
+                .OnDelete(DeleteBehavior.Restrict); // Thay đổi ở đây
+
+            // 3. Nếu bảng Assignment cũng gây lỗi tương tự
+            builder.Entity<Assignment>()
+                .HasOne(a => a.Teacher)
+                .WithMany()
+                .HasForeignKey(a => a.TeacherId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

@@ -3,12 +3,48 @@
   "WorkspaceRootPath": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Migrations\\20260313174620_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:QLHocSinh\\Migrations\\20260313174620_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Migrations\\20260313174412_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:QLHocSinh\\Migrations\\20260313174412_InitialCreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|c:\\users\\khacb\\source\\repos\\qlhocsinh\\qlhocsinh\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|solutionrelative:qlhocsinh\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|c:\\users\\khacb\\source\\repos\\qlhocsinh\\qlhocsinh\\models\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|solutionrelative:qlhocsinh\\models\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|c:\\users\\khacb\\source\\repos\\qlhocsinh\\qlhocsinh\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|solutionrelative:qlhocsinh\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|c:\\users\\khacb\\source\\repos\\qlhocsinh\\qlhocsinh\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|solutionrelative:qlhocsinh\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|c:\\users\\khacb\\source\\repos\\qlhocsinh\\qlhocsinh\\qlhocsinh.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|solutionrelative:qlhocsinh\\qlhocsinh.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|c:\\users\\khacb\\source\\repos\\qlhocsinh\\qlhocsinh\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|solutionrelative:qlhocsinh\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|c:\\users\\khacb\\source\\repos\\qlhocsinh\\qlhocsinh\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|solutionrelative:qlhocsinh\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|c:\\users\\khacb\\source\\repos\\qlhocsinh\\qlhocsinh\\wwwroot\\favicon.ico||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|solutionrelative:qlhocsinh\\wwwroot\\favicon.ico||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|c:\\users\\khacb\\source\\repos\\qlhocsinh\\qlhocsinh\\models\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|solutionrelative:qlhocsinh\\models\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|c:\\users\\khacb\\source\\repos\\qlhocsinh\\qlhocsinh\\models\\loginviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -23,20 +59,8 @@
       "RelativeMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|solutionrelative:qlhocsinh\\models\\grade.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|c:\\users\\khacb\\source\\repos\\qlhocsinh\\qlhocsinh\\controllers\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|solutionrelative:qlhocsinh\\controllers\\login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|c:\\users\\khacb\\source\\repos\\qlhocsinh\\qlhocsinh\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|solutionrelative:qlhocsinh\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|c:\\users\\khacb\\source\\repos\\qlhocsinh\\qlhocsinh\\models\\assignment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|solutionrelative:qlhocsinh\\models\\assignment.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|c:\\users\\khacb\\source\\repos\\qlhocsinh\\qlhocsinh\\models\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|solutionrelative:qlhocsinh\\models\\class.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{531C9B93-9301-4582-A39E-44888C6C759B}|QLHocSinh\\QLHocSinh.csproj|c:\\users\\khacb\\source\\repos\\qlhocsinh\\qlhocsinh\\models\\subject.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -54,50 +78,144 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ApplicationDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Models\\ApplicationDbContext.cs",
-              "RelativeDocumentMoniker": "QLHocSinh\\Models\\ApplicationDbContext.cs",
-              "ToolTip": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Models\\ApplicationDbContext.cs",
-              "RelativeToolTip": "QLHocSinh\\Models\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-13T16:07:26.358Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "login.cs",
-              "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Controllers\\login.cs",
-              "RelativeDocumentMoniker": "QLHocSinh\\Controllers\\login.cs",
-              "ToolTip": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Controllers\\login.cs",
-              "RelativeToolTip": "QLHocSinh\\Controllers\\login.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADQAAAABAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "20260313174620_InitialCreate.cs",
+              "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Migrations\\20260313174620_InitialCreate.cs",
+              "RelativeDocumentMoniker": "QLHocSinh\\Migrations\\20260313174620_InitialCreate.cs",
+              "ToolTip": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Migrations\\20260313174620_InitialCreate.cs",
+              "RelativeToolTip": "QLHocSinh\\Migrations\\20260313174620_InitialCreate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-13T16:06:15.35Z",
+              "WhenOpened": "2026-03-13T17:46:21.028Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "QLHocSinh",
+              "Title": "20260313174412_InitialCreate.cs",
+              "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Migrations\\20260313174412_InitialCreate.cs",
+              "RelativeDocumentMoniker": "QLHocSinh\\Migrations\\20260313174412_InitialCreate.cs",
+              "ToolTip": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Migrations\\20260313174412_InitialCreate.cs",
+              "RelativeToolTip": "QLHocSinh\\Migrations\\20260313174412_InitialCreate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-13T17:44:13.071Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "QLHocSinh\\Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "QLHocSinh\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC8AAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-13T16:43:58.897Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "QLHocSinh\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Properties\\launchSettings.json",
+              "RelativeToolTip": "QLHocSinh\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-13T16:30:52.974Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "QLHocSinh.csproj",
               "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\QLHocSinh.csproj",
               "RelativeDocumentMoniker": "QLHocSinh\\QLHocSinh.csproj",
               "ToolTip": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\QLHocSinh.csproj",
               "RelativeToolTip": "QLHocSinh\\QLHocSinh.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2026-03-13T15:56:43.772Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ApplicationDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Models\\ApplicationDbContext.cs",
+              "RelativeDocumentMoniker": "QLHocSinh\\Models\\ApplicationDbContext.cs",
+              "ToolTip": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Models\\ApplicationDbContext.cs",
+              "RelativeToolTip": "QLHocSinh\\Models\\ApplicationDbContext.cs",
+              "ViewState": "AgIAABcAAAAAAAAAAAAgwC0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-13T16:07:26.358Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\appsettings.json",
+              "RelativeDocumentMoniker": "QLHocSinh\\appsettings.json",
+              "ToolTip": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\appsettings.json",
+              "RelativeToolTip": "QLHocSinh\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-13T16:27:51.362Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Program.cs",
+              "RelativeDocumentMoniker": "QLHocSinh\\Program.cs",
+              "ToolTip": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Program.cs",
+              "RelativeToolTip": "QLHocSinh\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-13T15:54:24.469Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "QLHocSinh\\appsettings.Development.json",
+              "ToolTip": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\appsettings.Development.json",
+              "RelativeToolTip": "QLHocSinh\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-03-13T16:30:41.218Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "favicon.ico - Icon [32x32, 32 bit, BMP]",
+              "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\wwwroot\\favicon.ico",
+              "RelativeDocumentMoniker": "QLHocSinh\\wwwroot\\favicon.ico",
+              "ToolTip": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\wwwroot\\favicon.ico - Icon [32x32, 32 bit, BMP]",
+              "RelativeToolTip": "QLHocSinh\\wwwroot\\favicon.ico - Icon [32x32, 32 bit, BMP]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001525|",
+              "WhenOpened": "2026-03-13T16:27:31.069Z",
+              "EditorCaption": " - Icon [32x32, 32 bit, BMP]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "LoginViewModel.cs",
               "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Models\\LoginViewModel.cs",
               "RelativeDocumentMoniker": "QLHocSinh\\Models\\LoginViewModel.cs",
@@ -105,29 +223,11 @@
               "RelativeToolTip": "QLHocSinh\\Models\\LoginViewModel.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-13T15:55:23.13Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-13T15:55:23.13Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Program.cs",
-              "RelativeDocumentMoniker": "QLHocSinh\\Program.cs",
-              "ToolTip": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Program.cs",
-              "RelativeToolTip": "QLHocSinh\\Program.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAQwBYAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-13T15:54:24.469Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 13,
               "Title": "Grade.cs",
               "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Models\\Grade.cs",
               "RelativeDocumentMoniker": "QLHocSinh\\Models\\Grade.cs",
@@ -135,12 +235,11 @@
               "RelativeToolTip": "QLHocSinh\\Models\\Grade.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-13T15:50:37.162Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-13T15:50:37.162Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 12,
               "Title": "Student.cs",
               "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Models\\Student.cs",
               "RelativeDocumentMoniker": "QLHocSinh\\Models\\Student.cs",
@@ -148,12 +247,11 @@
               "RelativeToolTip": "QLHocSinh\\Models\\Student.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-13T15:48:42.266Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-13T15:48:42.266Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 14,
               "Title": "Assignment.cs",
               "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Models\\Assignment.cs",
               "RelativeDocumentMoniker": "QLHocSinh\\Models\\Assignment.cs",
@@ -161,12 +259,11 @@
               "RelativeToolTip": "QLHocSinh\\Models\\Assignment.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-13T15:51:03.283Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-13T15:51:03.283Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 15,
               "Title": "Subject.cs",
               "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Models\\Subject.cs",
               "RelativeDocumentMoniker": "QLHocSinh\\Models\\Subject.cs",
@@ -174,12 +271,24 @@
               "RelativeToolTip": "QLHocSinh\\Models\\Subject.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-13T15:49:51.399Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-13T15:49:51.399Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 10,
+              "Title": "Class.cs",
+              "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Models\\Class.cs",
+              "RelativeDocumentMoniker": "QLHocSinh\\Models\\Class.cs",
+              "ToolTip": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Models\\Class.cs",
+              "RelativeToolTip": "QLHocSinh\\Models\\Class.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAA+wAYAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-13T15:48:19.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
               "Title": "ApplicationUser.cs",
               "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Models\\ApplicationUser.cs",
               "RelativeDocumentMoniker": "QLHocSinh\\Models\\ApplicationUser.cs",
@@ -187,21 +296,7 @@
               "RelativeToolTip": "QLHocSinh\\Models\\ApplicationUser.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-13T15:49:22.2Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "Class.cs",
-              "DocumentMoniker": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Models\\Class.cs",
-              "RelativeDocumentMoniker": "QLHocSinh\\Models\\Class.cs",
-              "ToolTip": "C:\\Users\\khacb\\source\\repos\\QLHocSinh\\QLHocSinh\\Models\\Class.cs",
-              "RelativeToolTip": "QLHocSinh\\Models\\Class.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAYAAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-13T15:48:19.995Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-13T15:49:22.2Z"
             }
           ]
         }
