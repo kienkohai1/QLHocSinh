@@ -1,0 +1,36 @@
+﻿@model Student
+
+@{
+    ViewData["Title"] = "Chi tiết Học sinh";
+}
+
+<h2>Thông tin chi tiết Học sinh</h2>
+<hr />
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">Mã Học sinh:</dt>
+        <dd class="col-sm-9">@Model.StudentCode</dd>
+
+        <dt class="col-sm-3">Họ và Tên:</dt>
+        <dd class="col-sm-9">@Model.FullName</dd>
+
+        <dt class="col-sm-3">Ngày sinh:</dt>
+        <dd class="col-sm-9">@Model.DateOfBirth.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-3">Lớp đang học:</dt>
+        <dd class="col-sm-9">
+            @(Model.Class != null ? Model.Class.ClassName : "Chưa được xếp lớp")
+        </dd>
+
+        <dt class="col-sm-3">Tên Phụ huynh:</dt>
+        <dd class="col-sm-9">
+            @(Model.Parent != null ? Model.Parent.FullName : "Chưa có dữ liệu phụ huynh")
+        </dd>
+    </dl>
+</div>
+
+<div class="mt-3">
+    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Sửa thông tin</a>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+</div>

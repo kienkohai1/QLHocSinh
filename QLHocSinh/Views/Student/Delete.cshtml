@@ -1,0 +1,37 @@
+﻿@model Student
+
+@{
+    ViewData["Title"] = "Xóa Học sinh";
+}
+
+<h2 class="text-danger">Xác nhận Xóa</h2>
+<h3>Bạn có chắc chắn muốn xóa học sinh này khỏi hệ thống?</h3>
+<hr />
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">Mã Học sinh:</dt>
+        <dd class="col-sm-9">@Model.StudentCode</dd>
+
+        <dt class="col-sm-3">Họ và Tên:</dt>
+        <dd class="col-sm-9">@Model.FullName</dd>
+
+        <dt class="col-sm-3">Ngày sinh:</dt>
+        <dd class="col-sm-9">@Model.DateOfBirth.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-3">Lớp học:</dt>
+        <dd class="col-sm-9">
+            @(Model.Class != null ? Model.Class.ClassName : "Chưa xếp lớp")
+        </dd>
+    </dl>
+
+    <div class="alert alert-warning">
+        <i class="bi bi-exclamation-triangle-fill"></i> Lưu ý: Hành động này không thể hoàn tác. Các dữ liệu liên quan (nếu chưa cấu hình Cascade Delete) có thể bị ảnh hưởng.
+    </div>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="btn btn-danger">Xác nhận Xóa</button>
+        <a asp-action="Index" class="btn btn-secondary">Hủy bỏ</a>
+    </form>
+</div>

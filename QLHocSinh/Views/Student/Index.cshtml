@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Student>
+
+@{
+    ViewData["Title"] = "Quản lý Học sinh";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Danh sách Học sinh</h2>
+    <a asp-action="Create" class="btn btn-primary">Thêm Học sinh mới</a>
+</div>
+
+<table class="table table-bordered table-hover">
+    <thead class="table-dark">
+        <tr>
+            <th>Mã HS</th>
+            <th>Họ và tên</th>
+            <th>Ngày sinh</th>
+            <th>Lớp học</th>
+            <th>Phụ huynh</th>
+            <th>Hành động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="6" class="text-center">Chưa có dữ liệu học sinh.</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.StudentCode</td>
+                    <td>@item.FullName</td>
+                    <td>@item.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                    <td>@(item.Class != null ? item.Class.ClassName : "Chưa xếp lớp")</td>
+                    <td>@(item.Parent != null ? item.Parent.FullName : "Chưa gắn")</td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Sửa</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa học sinh này không?');">Xóa</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

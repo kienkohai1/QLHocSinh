@@ -1,0 +1,61 @@
+﻿@model Student
+
+@{
+    ViewData["Title"] = "Chỉnh sửa thông tin";
+}
+
+<h2>Chỉnh sửa Học sinh</h2>
+<hr />
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="Id" />
+
+            <div class="mb-3">
+                <label asp-for="StudentCode" class="form-label">Mã Học Sinh</label>
+                <input asp-for="StudentCode" class="form-control" required />
+                <span asp-validation-for="StudentCode" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="FullName" class="form-label">Họ và Tên</label>
+                <input asp-for="FullName" class="form-control" required />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="DateOfBirth" class="form-label">Ngày sinh</label>
+                <input asp-for="DateOfBirth" type="date" class="form-control" required />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ClassId" class="form-label">Xếp Lớp</label>
+                <select asp-for="ClassId" class="form-select" asp-items="ViewBag.ClassId" required>
+                    <option value="">-- Chọn Lớp --</option>
+                </select>
+                <span asp-validation-for="ClassId" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="ParentId" class="form-label">Tài khoản Phụ huynh</label>
+                <select asp-for="ParentId" class="form-select" asp-items="ViewBag.ParentId">
+                    <option value="">-- Gắn tài khoản Phụ huynh --</option>
+                </select>
+                <span asp-validation-for="ParentId" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Cập nhật</button>
+            <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
