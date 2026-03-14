@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
 
+[Authorize(Roles = "Admin")]
 public class AdminController : Controller
 {
     private readonly UserManager<ApplicationUser> _userManager;
@@ -38,7 +39,9 @@ public class AdminController : Controller
             {
                 UserName = model.Username,
                 Email = model.Email,
-                FullName = model.FullName
+                FullName = model.FullName,
+                // THÊM DÒNG NÀY ĐỂ TRÁNH LỖI NULL TRONG DB
+                UserRole = model.SelectedRole
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);

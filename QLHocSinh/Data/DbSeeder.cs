@@ -31,9 +31,8 @@ namespace QLHocSinh.Data
                 {
                     UserName = "admin",
                     Email = adminEmail,
-                    FullName = "Ban Giám Hiệu",
-                    EmailConfirmed = true,
-                    PhoneNumberConfirmed = true
+                    UserRole = "Admin",
+                    FullName = "Ban Giám Hiệu"
                 };
 
                 // Đặt mật khẩu mặc định (ví dụ: Admin@123)
