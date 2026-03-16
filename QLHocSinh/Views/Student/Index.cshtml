@@ -4,45 +4,78 @@
     ViewData["Title"] = "Quản lý Học sinh";
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Danh sách Học sinh</h2>
-    <a asp-action="Create" class="btn btn-primary">Thêm Học sinh mới</a>
-</div>
+<div class="card shadow-sm border-0 mt-4">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+        <h4 class="mb-0 text-primary fw-bold">
+            <i class="bi bi-people-fill me-2"></i>Danh sách Học sinh
+        </h4>
+        <a asp-action="Create" class="btn btn-primary rounded-pill px-4 shadow-sm">
+            <i class="bi bi-plus-lg me-1"></i> Thêm Học sinh mới
+        </a>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="table-light text-muted">
+                    <tr>
+                        <th class="ps-4">Mã HS</th>
+                        <th>Họ và tên</th>
+                        <th>Ngày sinh</th>
+                        <th>Lớp học</th>
+                        <th>Phụ huynh</th>
+                        <th class="text-center">Hành động</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="6" class="text-center py-4 text-muted">
+                                <i class="bi bi-inbox fs-2 d-block mb-2"></i>
+                                Chưa có dữ liệu học sinh.
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-medium text-primary">@item.StudentCode</td>
+                                <td class="fw-bold">@item.FullName</td>
+                                <td>@item.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    @if (item.Class != null)
+                                    {
+                                        <span class="badge bg-info text-dark bg-opacity-25 border border-info px-2 py-1">@item.Class.ClassName</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-muted fst-italic">Chưa xếp lớp</span>
+                                    }
+                                </td>
+                                <td>@(item.Parent != null ? item.Parent.FullName : "Chưa gắn")</td>
+                                <td class="text-center">
+                                    <div class="d-flex justify-content-center gap-1">
+                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info" title="Chi tiết">
+                                            <i class="bi bi-eye"></i> <span class="d-none d-md-inline">Chi tiết</span>
+                                        </a>
 
-<table class="table table-bordered table-hover">
-    <thead class="table-dark">
-        <tr>
-            <th>Mã HS</th>
-            <th>Họ và tên</th>
-            <th>Ngày sinh</th>
-            <th>Lớp học</th>
-            <th>Phụ huynh</th>
-            <th>Hành động</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (!Model.Any())
-        {
-            <tr>
-                <td colspan="6" class="text-center">Chưa có dữ liệu học sinh.</td>
-            </tr>
-        }
-        else
-        {
-            foreach (var item in Model)
-            {
-                <tr>
-                    <td>@item.StudentCode</td>
-                    <td>@item.FullName</td>
-                    <td>@item.DateOfBirth.ToString("dd/MM/yyyy")</td>
-                    <td>@(item.Class != null ? item.Class.ClassName : "Chưa xếp lớp")</td>
-                    <td>@(item.Parent != null ? item.Parent.FullName : "Chưa gắn")</td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Sửa</a>
-                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa học sinh này không?');">Xóa</a>
-                    </td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning" title="Sửa">
+                                            <i class="bi bi-pencil-square"></i> <span class="d-none d-md-inline">Sửa</span>
+                                        </a>
+
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger"
+                                           onclick="return confirm('Bạn có chắc chắn muốn xóa học sinh này không?');" title="Xóa">
+                                            <i class="bi bi-trash"></i> <span class="d-none d-md-inline">Xóa</span>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

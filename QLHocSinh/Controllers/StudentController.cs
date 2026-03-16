@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -30,19 +31,57 @@ namespace QLHocSinh.Controllers
             return View(students);
         }
 
-        // 2. CHI TIẾT HỌC SINH
-        [HttpGet]
+        // GET: Student/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
 
             var student = await _context.Students
                 .Include(s => s.Class)
-                .Include(s => s.Parent)
+                .Include(s => s.Grades)
+                    .ThenInclude(g => g.Subject)
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (student == null) return NotFound();
+
+            // Chỉ cần chuẩn bị danh sách Môn học
+            ViewBag.Subjects = new SelectList(await _context.Subjects.ToListAsync(), "Id", "Name");
+
             return View(student);
+        }
+
+        // POST: Xử lý form từ Modal Thêm Môn Học
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AddSubject(int studentId, int subjectId)
+        {
+            var student = await _context.Students.FindAsync(studentId);
+            if (student == null) return NotFound();
+
+            // Kiểm tra xem học sinh đã có môn học này trong bảng điểm chưa để tránh thêm trùng
+            var alreadyExists = await _context.Grades
+                .AnyAsync(g => g.StudentId == studentId && g.SubjectId == subjectId);
+
+            if (!alreadyExists)
+            {
+                var teacherId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                // Tạo bản ghi "mồi" để hiển thị môn học lên bảng
+                var gradePlaceholder = new Grade
+                {
+                    StudentId = studentId,
+                    SubjectId = subjectId,
+                    ExamType = "Khởi tạo", // Loại điểm ảo, không hiển thị ra các cột điểm thực tế
+                    Score = 0,
+                    DateCreated = DateTime.Now,
+                    TeacherId = teacherId ?? ""
+                };
+
+                _context.Grades.Add(gradePlaceholder);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction(nameof(Details), new { id = studentId });
         }
 
         // 3. THÊM MỚI HỌC SINH (GET)

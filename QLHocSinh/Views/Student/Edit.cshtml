@@ -4,53 +4,72 @@
     ViewData["Title"] = "Chỉnh sửa thông tin";
 }
 
-<h2>Chỉnh sửa Học sinh</h2>
-<hr />
-
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Edit" method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <input type="hidden" asp-for="Id" />
-
-            <div class="mb-3">
-                <label asp-for="StudentCode" class="form-label">Mã Học Sinh</label>
-                <input asp-for="StudentCode" class="form-control" required />
-                <span asp-validation-for="StudentCode" class="text-danger"></span>
+<div class="row justify-content-center mt-4">
+    <div class="col-lg-8 col-md-10">
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-header bg-white py-3 border-bottom">
+                <h4 class="mb-0 text-primary fw-bold">
+                    <i class="bi bi-pencil-square me-2"></i>Chỉnh sửa thông tin Học sinh
+                </h4>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="FullName" class="form-label">Họ và Tên</label>
-                <input asp-for="FullName" class="form-control" required />
-                <span asp-validation-for="FullName" class="text-danger"></span>
-            </div>
+            <div class="card-body p-4 p-md-5">
+                <form asp-action="Edit" method="post">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
-            <div class="mb-3">
-                <label asp-for="DateOfBirth" class="form-label">Ngày sinh</label>
-                <input asp-for="DateOfBirth" type="date" class="form-control" required />
-                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
-            </div>
+                    <input type="hidden" asp-for="Id" />
 
-            <div class="mb-3">
-                <label asp-for="ClassId" class="form-label">Xếp Lớp</label>
-                <select asp-for="ClassId" class="form-select" asp-items="ViewBag.ClassId" required>
-                    <option value="">-- Chọn Lớp --</option>
-                </select>
-                <span asp-validation-for="ClassId" class="text-danger"></span>
-            </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="StudentCode" class="form-label fw-semibold">Mã Học Sinh</label>
+                            <input asp-for="StudentCode" class="form-control form-control-lg bg-light" readonly />
+                            <span asp-validation-for="StudentCode" class="text-danger small"></span>
+                        </div>
 
-            <div class="mb-3">
-                <label asp-for="ParentId" class="form-label">Tài khoản Phụ huynh</label>
-                <select asp-for="ParentId" class="form-select" asp-items="ViewBag.ParentId">
-                    <option value="">-- Gắn tài khoản Phụ huynh --</option>
-                </select>
-                <span asp-validation-for="ParentId" class="text-danger"></span>
-            </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="DateOfBirth" class="form-label fw-semibold">Ngày sinh</label>
+                            <input asp-for="DateOfBirth" type="date" class="form-control form-control-lg" required />
+                            <span asp-validation-for="DateOfBirth" class="text-danger small"></span>
+                        </div>
+                    </div>
 
-            <button type="submit" class="btn btn-primary">Cập nhật</button>
-            <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
-        </form>
+                    <div class="mb-3">
+                        <label asp-for="FullName" class="form-label fw-semibold">Họ và Tên</label>
+                        <input asp-for="FullName" class="form-control form-control-lg" placeholder="Nhập họ và tên..." required />
+                        <span asp-validation-for="FullName" class="text-danger small"></span>
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ClassId" class="form-label fw-semibold">Xếp Lớp</label>
+                            <select asp-for="ClassId" class="form-select form-select-lg" asp-items="ViewBag.ClassId" required>
+                                <option value="">-- Chọn Lớp --</option>
+                            </select>
+                            <span asp-validation-for="ClassId" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ParentId" class="form-label fw-semibold">Tài khoản Phụ huynh</label>
+                            <select asp-for="ParentId" class="form-select form-select-lg" asp-items="ViewBag.ParentId">
+                                <option value="">-- Gắn tài khoản Phụ huynh --</option>
+                            </select>
+                            <span asp-validation-for="ParentId" class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    <hr class="my-4" />
+
+                    <div class="d-flex gap-2 justify-content-end">
+                        <a asp-action="Index" class="btn btn-light px-4 border">
+                            <i class="bi bi-x-lg me-1"></i> Hủy bỏ
+                        </a>
+                        <button type="submit" class="btn btn-primary px-5 shadow-sm">
+                            <i class="bi bi-save me-1"></i> Lưu cập nhật
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 

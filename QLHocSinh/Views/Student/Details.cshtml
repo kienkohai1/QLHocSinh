@@ -1,36 +1,135 @@
 ﻿@model Student
 
 @{
-    ViewData["Title"] = "Chi tiết Học sinh";
+    ViewData["Title"] = "Chi tiết học sinh";
 }
 
-<h2>Thông tin chi tiết Học sinh</h2>
-<hr />
-
-<div>
-    <dl class="row">
-        <dt class="col-sm-3">Mã Học sinh:</dt>
-        <dd class="col-sm-9">@Model.StudentCode</dd>
-
-        <dt class="col-sm-3">Họ và Tên:</dt>
-        <dd class="col-sm-9">@Model.FullName</dd>
-
-        <dt class="col-sm-3">Ngày sinh:</dt>
-        <dd class="col-sm-9">@Model.DateOfBirth.ToString("dd/MM/yyyy")</dd>
-
-        <dt class="col-sm-3">Lớp đang học:</dt>
-        <dd class="col-sm-9">
-            @(Model.Class != null ? Model.Class.ClassName : "Chưa được xếp lớp")
-        </dd>
-
-        <dt class="col-sm-3">Tên Phụ huynh:</dt>
-        <dd class="col-sm-9">
-            @(Model.Parent != null ? Model.Parent.FullName : "Chưa có dữ liệu phụ huynh")
-        </dd>
-    </dl>
+<div class="mb-3">
+    <a asp-action="Index" class="text-decoration-none text-secondary">
+        <i class="bi bi-arrow-left"></i> Quay lại danh sách
+    </a>
 </div>
 
-<div class="mt-3">
-    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Sửa thông tin</a>
-    <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+<div class="card shadow-sm border-0 mb-4 rounded-3">
+    <div class="card-body p-4">
+        <div class="row align-items-center">
+            <div class="col-md-8 d-flex align-items-center">
+                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center me-4" style="width: 70px; height: 70px;">
+                    <i class="bi bi-person-badge fs-1"></i>
+                </div>
+                <div>
+                    <h3 class="fw-bold mb-1">@Model.FullName</h3>
+                    <div class="d-flex flex-wrap gap-3 text-muted">
+                        <span><i class="bi bi-upc-scan me-1"></i> <strong>@Model.StudentCode</strong></span>
+                        <span><i class="bi bi-easel me-1"></i> @(Model.Class?.ClassName ?? "Chưa xếp lớp")</span>
+                        <span><i class="bi bi-calendar-event me-1"></i> @Model.DateOfBirth.ToString("dd/MM/yyyy")</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <button type="button" class="btn btn-primary rounded-pill px-4 shadow-sm" data-bs-toggle="modal" data-bs-target="#addSubjectModal">
+                    <i class="bi bi-journal-plus me-1"></i> Thêm môn học
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-sm border-0 rounded-3">
+    <div class="card-header bg-white py-3 border-bottom">
+        <h5 class="mb-0 fw-bold"><i class="bi bi-table me-2 text-success"></i>Bảng điểm chi tiết</h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover table-striped align-middle mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="ps-4 w-25">Môn học</th>
+                        <th>Điểm Miệng</th>
+                        <th>Điểm 15p</th>
+                        <th>Điểm Giữa kỳ</th>
+                        <th>Điểm Cuối kỳ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Grades != null && Model.Grades.Any())
+                    {
+                        var groupedGrades = Model.Grades.GroupBy(g => g.Subject).ToList();
+
+                        foreach (var group in groupedGrades)
+                        {
+                            <tr>
+                                <td class="ps-4 fw-bold text-dark">@(group.Key?.Name ?? "Lỗi môn học")</td>
+
+                                <td>
+                                    @foreach (var g in group.Where(x => x.ExamType == "Miệng"))
+                                    {
+                                        <span class="badge bg-primary bg-gradient fs-6 me-1 shadow-sm">@g.Score</span>
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var g in group.Where(x => x.ExamType == "15p"))
+                                    {
+                                        <span class="badge bg-info text-dark bg-gradient fs-6 me-1 shadow-sm">@g.Score</span>
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var g in group.Where(x => x.ExamType == "Giữa kỳ"))
+                                    {
+                                        <span class="badge bg-warning text-dark bg-gradient fs-6 me-1 shadow-sm">@g.Score</span>
+                                    }
+                                </td>
+                                <td>
+                                    @foreach (var g in group.Where(x => x.ExamType == "Cuối kỳ"))
+                                    {
+                                        <span class="badge bg-danger bg-gradient fs-6 me-1 shadow-sm">@g.Score</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                Học sinh chưa đăng ký môn học nào.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addSubjectModal" tabindex="-1" aria-labelledby="addSubjectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="addSubjectModalLabel"><i class="bi bi-plus-circle me-2"></i>Thêm Môn Học Mới</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form asp-action="AddSubject" method="post">
+                <div class="modal-body p-4">
+                    <input type="hidden" name="studentId" value="@Model.Id" />
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Chọn môn học</label>
+                        <select name="subjectId" class="form-select form-select-lg" asp-items="ViewBag.Subjects" required>
+                            <option value="">-- Chọn môn --</option>
+                        </select>
+                    </div>
+
+                    <div class="alert alert-light border border-info text-info d-flex align-items-center mb-0 mt-3" role="alert">
+                        <i class="bi bi-info-circle-fill flex-shrink-0 me-2 fs-5"></i>
+                        <div><small>Môn học sẽ được thêm vào danh sách. Việc nhập điểm chi tiết sẽ thực hiện ở phân hệ riêng.</small></div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-primary px-4">Xác nhận</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
