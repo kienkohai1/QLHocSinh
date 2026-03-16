@@ -1,0 +1,30 @@
+﻿@model Subject
+
+@{
+    ViewData["Title"] = "Chi tiết Môn học";
+}
+
+<div class="container mt-4">
+    <h2>Chi tiết Môn học: @Model.Name</h2>
+    <hr />
+
+    <div class="card shadow-sm col-md-8">
+        <div class="card-body">
+            <dl class="row mb-0">
+                <dt class="col-sm-4 text-muted">Mã môn học (ID)</dt>
+                <dd class="col-sm-8 fw-bold">@Model.Id</dd>
+
+                <dt class="col-sm-4 text-muted">Tên môn học</dt>
+                <dd class="col-sm-8 fw-bold">@Model.Name</dd>
+
+                <dt class="col-sm-4 text-muted">Số tín chỉ / Số tiết</dt>
+                <dd class="col-sm-8 fw-bold">@Model.Credits</dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Chỉnh sửa</a>
+        <a asp-action="Index" class="btn btn-secondary ms-2">Quay lại danh sách</a>
+    </div>
+</div>

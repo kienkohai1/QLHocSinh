@@ -9,11 +9,10 @@ public class Student
 
     // Khóa ngoại đến Lớp học
     public int ClassId { get; set; }
-    public Class Class { get; set; }
+    public Class? Class { get; set; } // Thêm dấu ?
 
-    // Liên kết với tài khoản Phụ huynh (ApplicationUser)
-    public string ParentId { get; set; }
-    public ApplicationUser Parent { get; set; }
+    public string? ParentId { get; set; } // Thêm dấu ?
+    public ApplicationUser? Parent { get; set; }
 
     public ICollection<Grade> Grades { get; set; }
 }

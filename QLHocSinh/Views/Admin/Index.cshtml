@@ -46,9 +46,23 @@
                     <p class="card-text text-muted">Cấp phát tài khoản đăng nhập cho Phụ huynh, Học sinh và Giáo viên mới.</p>
                 </div>
                 <div class="card-footer bg-white border-0 text-center pb-4">
-                    <a asp-controller="Admin" asp-action="CreateUser" class="btn btn-warning text-dark fw-bold w-75 rounded-pill">Thêm tài khoản</a>
+                    <a asp-controller="Admin" asp-action="ManageUsers" class="btn btn-warning text-dark fw-bold w-75 rounded-pill">Quản lý tài khoản</a>
                 </div>
             </div>
         </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100 rounded-3 border-bottom border-info border-4">
+                <div class="card-body text-center p-4">
+                    <div class="display-4 text-info mb-3">📚</div>
+                    <h4 class="card-title fw-bold">Quản lý Môn học</h4>
+                    <p class="card-text text-muted">Thêm mới, chỉnh sửa, xóa và thiết lập số tín chỉ/số tiết cho các môn học.</p>
+                </div>
+                <div class="card-footer bg-white border-0 text-center pb-4">
+                    <a asp-controller="Subject" asp-action="Index" class="btn btn-info text-white fw-bold w-75 rounded-pill">Truy cập ngay</a>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>

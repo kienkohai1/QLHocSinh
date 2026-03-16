@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using QLHocSinh.Models; // Đảm bảo namespace này khớp với project của bạn
+using QLHocSinh.Models;
 
 namespace QLHocSinh.Controllers
 {
@@ -19,9 +19,7 @@ namespace QLHocSinh.Controllers
             _userManager = userManager;
         }
 
-        // ==========================================
-        // 1. DANH SÁCH HỌC SINH (INDEX)
-        // ==========================================
+        // 1. DANH SÁCH HỌC SINH
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -29,13 +27,10 @@ namespace QLHocSinh.Controllers
                 .Include(s => s.Class)
                 .Include(s => s.Parent)
                 .ToListAsync();
-
             return View(students);
         }
 
-        // ==========================================
-        // 2. XEM CHI TIẾT HỌC SINH (DETAILS)
-        // ==========================================
+        // 2. CHI TIẾT HỌC SINH
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
@@ -47,45 +42,87 @@ namespace QLHocSinh.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (student == null) return NotFound();
-
             return View(student);
         }
 
-        // ==========================================
-        // 3. THÊM MỚI HỌC SINH (CREATE)
-        // ==========================================
+        // 3. THÊM MỚI HỌC SINH (GET)
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            ViewData["ClassId"] = new SelectList(_context.Classes, "Id", "ClassName");
-
-            var parents = await _userManager.GetUsersInRoleAsync("Parent");
-            ViewData["ParentId"] = new SelectList(parents, "Id", "FullName");
-
+            await PrepareViewData();
             return View();
         }
 
+        // 3. THÊM MỚI HỌC SINH (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Student student)
+        public async Task<IActionResult> Create(Student student, string? NewParentFullName, string? NewParentEmail)
         {
-            if (ModelState.IsValid)
+            // Bước A: Xử lý tạo tài khoản phụ huynh mới nếu có thông tin nhập vào
+            if (!string.IsNullOrEmpty(NewParentEmail) && !string.IsNullOrEmpty(NewParentFullName))
             {
-                _context.Add(student);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var existingUser = await _userManager.FindByEmailAsync(NewParentEmail);
+                if (existingUser == null)
+                {
+                    var newParent = new ApplicationUser
+                    {
+                        UserName = NewParentEmail,
+                        Email = NewParentEmail,
+                        FullName = NewParentFullName,
+                        UserRole = "Parent" // Gán giá trị tránh lỗi SqlException
+                    };
+
+                    var result = await _userManager.CreateAsync(newParent, "Parent@123");
+                    if (result.Succeeded)
+                    {
+                        await _userManager.AddToRoleAsync(newParent, "Parent");
+                        student.ParentId = newParent.Id; // Gán ID vừa tạo cho học sinh
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError("", "Lỗi tạo phụ huynh: " + error.Description);
+                        }
+                    }
+                }
+                else
+                {
+                    student.ParentId = existingUser.Id; // Nếu email đã tồn tại, dùng ID đó
+                }
             }
 
-            ViewData["ClassId"] = new SelectList(_context.Classes, "Id", "ClassName", student.ClassId);
-            var parents = await _userManager.GetUsersInRoleAsync("Parent");
-            ViewData["ParentId"] = new SelectList(parents, "Id", "FullName", student.ParentId);
+            // Bước B: Kiểm tra trùng mã học sinh
+            if (_context.Students.Any(s => s.StudentCode == student.StudentCode))
+            {
+                ModelState.AddModelError("StudentCode", "Mã học sinh này đã tồn tại.");
+            }
 
+            // Bước C: Loại bỏ Validation cho các Object liên kết (vì form chỉ gửi ID)
+            ModelState.Remove("Parent");
+            ModelState.Remove("Class");
+            ModelState.Remove("Grades");
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Add(student);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("", "Lỗi khi lưu học sinh: " + ex.Message);
+                }
+            }
+
+            // Nếu dữ liệu không hợp lệ, nạp lại Dropdown và trả về View
+            await PrepareViewData(student.ClassId, student.ParentId);
             return View(student);
         }
 
-        // ==========================================
-        // 4. CHỈNH SỬA THÔNG TIN HỌC SINH (EDIT)
-        // ==========================================
+        // 4. CHỈNH SỬA (GET)
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
@@ -94,19 +131,19 @@ namespace QLHocSinh.Controllers
             var student = await _context.Students.FindAsync(id);
             if (student == null) return NotFound();
 
-            // Nạp dữ liệu cho Dropdown và chọn sẵn giá trị hiện tại của học sinh
-            ViewData["ClassId"] = new SelectList(_context.Classes, "Id", "ClassName", student.ClassId);
-            var parents = await _userManager.GetUsersInRoleAsync("Parent");
-            ViewData["ParentId"] = new SelectList(parents, "Id", "FullName", student.ParentId);
-
+            await PrepareViewData(student.ClassId, student.ParentId);
             return View(student);
         }
 
+        // 4. CHỈNH SỬA (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Student student)
         {
             if (id != student.Id) return NotFound();
+
+            ModelState.Remove("Parent");
+            ModelState.Remove("Class");
 
             if (ModelState.IsValid)
             {
@@ -114,25 +151,19 @@ namespace QLHocSinh.Controllers
                 {
                     _context.Update(student);
                     await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     if (!StudentExists(student.Id)) return NotFound();
                     else throw;
                 }
-                return RedirectToAction(nameof(Index));
             }
-
-            ViewData["ClassId"] = new SelectList(_context.Classes, "Id", "ClassName", student.ClassId);
-            var parents = await _userManager.GetUsersInRoleAsync("Parent");
-            ViewData["ParentId"] = new SelectList(parents, "Id", "FullName", student.ParentId);
-
+            await PrepareViewData(student.ClassId, student.ParentId);
             return View(student);
         }
 
-        // ==========================================
-        // 5. XÓA HỌC SINH (DELETE)
-        // ==========================================
+        // 5. XÓA (GET)
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -144,10 +175,10 @@ namespace QLHocSinh.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (student == null) return NotFound();
-
             return View(student);
         }
 
+        // 5. XÓA (POST)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -161,7 +192,15 @@ namespace QLHocSinh.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Hàm hỗ trợ kiểm tra học sinh có tồn tại hay không (dùng trong hàm Edit)
+        // HÀM HỖ TRỢ: Nạp danh sách cho Dropdown
+        private async Task PrepareViewData(int? selectedClass = null, string? selectedParent = null)
+        {
+            ViewData["ClassId"] = new SelectList(_context.Classes, "Id", "ClassName", selectedClass);
+
+            var parents = await _userManager.GetUsersInRoleAsync("Parent");
+            ViewData["ParentId"] = new SelectList(parents, "Id", "FullName", selectedParent);
+        }
+
         private bool StudentExists(int id)
         {
             return _context.Students.Any(e => e.Id == id);

@@ -1,0 +1,53 @@
+﻿@model Subject
+
+@{
+    ViewData["Title"] = "Xóa Môn học";
+}
+
+<div class="container mt-4">
+    <h2 class="text-danger">Xóa Môn học</h2>
+
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-warning">
+            <strong>Cảnh báo:</strong> @ViewBag.ErrorMessage
+        </div>
+    }
+    else
+    {
+        <h3>Bạn có chắc chắn muốn xóa môn học này không?</h3>
+    }
+
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-3">Mã môn học (ID)</dt>
+            <dd class="col-sm-9">@Model.Id</dd>
+
+            <dt class="col-sm-3">Tên môn học</dt>
+            <dd class="col-sm-9">@Model.Name</dd>
+
+            <dt class="col-sm-3">Số tín chỉ / tiết</dt>
+            <dd class="col-sm-9">@Model.Credits</dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+
+            @if (ViewBag.CanDelete == true || ViewBag.CanDelete == null)
+            {
+                <input type="submit" value="Xác nhận Xóa" class="btn btn-danger" />
+                <span> | </span>
+            }
+
+            <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+﻿@model ApplicationUser
+<h2>Sửa thông tin tài khoản</h2>
+<form asp-action="EditUser" method="post" class="w-50">
+    <input type="hidden" name="id" value="@Model.Id" />
+
+    <div class="mb-3">
+        <label>Tên đăng nhập (Không đổi được)</label>
+        <input class="form-control" value="@Model.UserName" disabled />
+    </div>
+
+    <div class="mb-3">
+        <label>Họ và tên</label>
+        <input type="text" name="FullName" value="@Model.FullName" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label>Email</label>
+        <input type="email" name="Email" value="@Model.Email" class="form-control" required />
+    </div>
+
+    <div class="mb-3">
+        <label>Vai trò</label>
+        <select name="UserRole" class="form-select" asp-items="ViewBag.RoleList">
+            <option value="@Model.UserRole" selected>@Model.UserRole (Đang chọn)</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+    <a asp-action="ManageUsers" class="btn btn-secondary">Hủy</a>
+</form>
