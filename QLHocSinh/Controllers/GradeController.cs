@@ -5,10 +5,14 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using QLHocSinh.Models;
 using QLHocSinh.Models.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace QLHocSinh.Controllers
 {
-    [Authorize] // Yêu cầu phải đăng nhập
+    [Authorize] // Yêu cầu đăng nhập
     public class GradeController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -20,40 +24,76 @@ namespace QLHocSinh.Controllers
             _userManager = userManager;
         }
 
-        // 1. Màn hình chọn Lớp, Môn, Loại điểm
+        // GET: Chọn lớp, môn, loại điểm
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            ViewData["ClassId"] = new SelectList(await _context.Classes.ToListAsync(), "Id", "Name");
-            ViewData["SubjectId"] = new SelectList(await _context.Subjects.ToListAsync(), "Id", "Name");
+            ViewBag.ListClasses = new SelectList(
+                await _context.Classes.OrderBy(c => c.ClassName).ToListAsync(),
+                "Id", "ClassName");   // giả sử property là ClassName
 
-            // Tạm thời hardcode danh sách loại điểm, có thể tách thành bảng riêng sau
-            ViewData["ExamType"] = new SelectList(new List<string> { "Miệng", "15p", "Giữa kỳ", "Cuối kỳ" });
+            ViewBag.ListSubjects = new SelectList(
+                await _context.Subjects.OrderBy(s => s.Name).ToListAsync(),
+                "Id", "Name");
+
+            var examTypes = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "Miệng",   Text = "Miệng"   },
+                new SelectListItem { Value = "15p",     Text = "15 phút" },
+                new SelectListItem { Value = "Giữa kỳ", Text = "Giữa kỳ" },
+                new SelectListItem { Value = "Cuối kỳ", Text = "Cuối kỳ" }
+            };
+            ViewBag.ListExamTypes = examTypes;
 
             return View();
         }
 
-        // 2. Màn hình nhập điểm cho toàn lớp
+        // GET: Hiển thị form nhập điểm
         [HttpGet]
         public async Task<IActionResult> Enter(int classId, int subjectId, string examType)
         {
-            var lopHoc = await _context.Classes.FindAsync(classId);
-            var monHoc = await _context.Subjects.FindAsync(subjectId);
-
-            if (lopHoc == null || monHoc == null || string.IsNullOrEmpty(examType))
+            if (classId <= 0 || subjectId <= 0 || string.IsNullOrWhiteSpace(examType))
             {
-                return NotFound("Không tìm thấy thông tin hợp lệ.");
+                TempData["ErrorMessage"] = "Thông tin lớp, môn hoặc loại điểm không hợp lệ.";
+                return RedirectToAction(nameof(Index));
             }
 
-            // Lấy danh sách học sinh thuộc lớp này
+            // Kiểm tra examType hợp lệ
+            var validExamTypes = new[] { "Miệng", "15p", "Giữa kỳ", "Cuối kỳ" };
+            if (!validExamTypes.Contains(examType))
+            {
+                TempData["ErrorMessage"] = "Loại điểm không hợp lệ.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            var lop = await _context.Classes.FindAsync(classId);
+            var mon = await _context.Subjects.FindAsync(subjectId);
+
+            if (lop == null || mon == null)
+            {
+                TempData["ErrorMessage"] = "Không tìm thấy lớp học hoặc môn học.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            // (Tùy chọn) Kiểm tra quyền: giáo viên có dạy lớp + môn này không?
+            // var currentUserId = _userManager.GetUserId(User);
+            // var isAssigned = await _context.TeacherAssignments
+            //     .AnyAsync(a => a.TeacherId == currentUserId && a.ClassId == classId && a.SubjectId == subjectId);
+            // if (!isAssigned && !User.IsInRole("Admin"))
+            // {
+            //     TempData["ErrorMessage"] = "Bạn không được phân công dạy lớp/môn này.";
+            //     return RedirectToAction(nameof(Index));
+            // }
+
             var students = await _context.Students
                 .Where(s => s.ClassId == classId)
                 .OrderBy(s => s.FullName)
                 .ToListAsync();
 
-            // Lấy điểm hiện tại (nếu có) để hiển thị lên form
             var existingGrades = await _context.Grades
-                .Where(g => g.SubjectId == subjectId && g.ExamType == examType && g.Student.ClassId == classId)
+                .Where(g => g.SubjectId == subjectId &&
+                            g.ExamType == examType &&
+                            g.Student.ClassId == classId)
                 .ToDictionaryAsync(g => g.StudentId, g => g.Score);
 
             var model = new GradeEntryViewModel
@@ -61,72 +101,101 @@ namespace QLHocSinh.Controllers
                 ClassId = classId,
                 SubjectId = subjectId,
                 ExamType = examType,
-                ClassName = lopHoc.ClassName,
-                SubjectName = monHoc.Name,
+                ClassName = lop.ClassName ?? "Không xác định",
+                SubjectName = mon.Name ?? "Không xác định",
                 Students = students.Select(s => new StudentScoreItem
                 {
                     StudentId = s.Id,
                     StudentCode = s.StudentCode,
                     FullName = s.FullName,
-                    Score = existingGrades.ContainsKey(s.Id) ? existingGrades[s.Id] : null
+                    Score = existingGrades.TryGetValue(s.Id, out var score) ? score : null
                 }).ToList()
             };
 
             return View(model);
         }
 
-        // 3. Xử lý lưu điểm vào Database
+        // POST: Lưu điểm
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SaveGrades(GradeEntryViewModel model)
         {
             if (!ModelState.IsValid)
             {
+                // Nếu validation lỗi → trả về view với lỗi
+                var lop = await _context.Classes.FindAsync(model.ClassId);
+                var mon = await _context.Subjects.FindAsync(model.SubjectId);
+
+                if (lop != null) model.ClassName = lop.ClassName;
+                if (mon != null) model.SubjectName = mon.Name;
+
                 return View("Enter", model);
             }
 
-            var currentUserId = _userManager.GetUserId(User); // Lấy ID giáo viên đang thao tác
+            var currentUserId = _userManager.GetUserId(User);
+            var validExamTypes = new[] { "Miệng", "15p", "Giữa kỳ", "Cuối kỳ" };
 
-            foreach (var item in model.Students)
+            if (!validExamTypes.Contains(model.ExamType))
             {
-                // Chỉ xử lý những học sinh được nhập điểm
-                if (item.Score.HasValue)
-                {
-                    var existingGrade = await _context.Grades.FirstOrDefaultAsync(g =>
-                        g.StudentId == item.StudentId &&
-                        g.SubjectId == model.SubjectId &&
-                        g.ExamType == model.ExamType);
-
-                    if (existingGrade != null)
-                    {
-                        // Cập nhật điểm nếu đã tồn tại
-                        existingGrade.Score = item.Score.Value;
-                        existingGrade.TeacherId = currentUserId; // Lưu vết người sửa cuối
-                        existingGrade.DateCreated = DateTime.Now;
-                        _context.Update(existingGrade);
-                    }
-                    else
-                    {
-                        // Thêm mới nếu chưa có
-                        var newGrade = new Grade
-                        {
-                            StudentId = item.StudentId,
-                            SubjectId = model.SubjectId,
-                            ExamType = model.ExamType,
-                            Score = item.Score.Value,
-                            TeacherId = currentUserId,
-                            DateCreated = DateTime.Now
-                        };
-                        _context.Add(newGrade);
-                    }
-                }
+                ModelState.AddModelError("", "Loại điểm không hợp lệ.");
+                return View("Enter", model);
             }
 
-            await _context.SaveChangesAsync();
-            TempData["SuccessMessage"] = "Đã lưu điểm thành công!";
+            using var transaction = await _context.Database.BeginTransactionAsync();
 
-            // Quay lại màn hình chọn
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                foreach (var item in model.Students)
+                {
+                    var existing = await _context.Grades
+                        .FirstOrDefaultAsync(g => g.StudentId == item.StudentId &&
+                                                  g.SubjectId == model.SubjectId &&
+                                                  g.ExamType == model.ExamType);
+
+                    if (item.Score.HasValue)
+                    {
+                        // Có điểm → cập nhật hoặc thêm mới
+                        if (existing != null)
+                        {
+                            existing.Score = item.Score.Value;
+                            existing.TeacherId = currentUserId;
+                            existing.DateCreated = DateTime.Now;
+                            _context.Grades.Update(existing);
+                        }
+                        else
+                        {
+                            var newGrade = new Grade
+                            {
+                                StudentId = item.StudentId,
+                                SubjectId = model.SubjectId,
+                                ExamType = model.ExamType,
+                                Score = item.Score.Value,
+                                TeacherId = currentUserId,
+                                DateCreated = DateTime.Now
+                            };
+                            _context.Grades.Add(newGrade);
+                        }
+                    }
+                    else if (existing != null)
+                    {
+                        // Không có điểm (null) nhưng trước đó có → xóa bản ghi cũ
+                        _context.Grades.Remove(existing);
+                    }
+                    // Nếu chưa có và Score vẫn null → bỏ qua (không làm gì)
+                }
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                TempData["SuccessMessage"] = $"Đã lưu điểm {model.ExamType} môn {model.SubjectName} lớp {model.ClassName} thành công!";
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                ModelState.AddModelError("", "Lỗi khi lưu điểm: " + ex.Message);
+                return View("Enter", model);
+            }
         }
     }
 }
