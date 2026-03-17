@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using QLHocSinh.Models;
+using QLHocSinh.Models.ViewModels;
 
 namespace QLHocSinh.Controllers
 {

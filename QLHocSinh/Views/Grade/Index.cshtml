@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Grade>
+@{
+    ViewData["Title"] = "Quản lý điểm";
+}
+
+<h2>Nhập điểm học sinh</h2>
+
+<div class="card mt-4">
+    <div class="card-body">
+        <form asp-action="Enter" method="get">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="form-label">Chọn lớp học</label>
+                    <select name="classId" class="form-select" asp-items="ViewBag.ClassId" required></select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Chọn môn học</label>
+                    <select name="subjectId" class="form-select" asp-items="ViewBag.SubjectId" required></select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Loại điểm (Miệng, 15p...)</label>
+                    <select name="examType" class="form-select" asp-items="ViewBag.ExamType" required></select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">Tiếp tục</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success mt-3">@TempData["SuccessMessage"]</div>
+}

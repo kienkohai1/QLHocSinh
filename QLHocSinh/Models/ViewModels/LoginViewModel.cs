@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace QLHocSinh.Models
+namespace QLHocSinh.Models.ViewModels
 {
     public class LoginViewModel
     {

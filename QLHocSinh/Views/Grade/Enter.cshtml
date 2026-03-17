@@ -1,0 +1,60 @@
+﻿@model QLHocSinh.Models.ViewModels.GradeEntryViewModel
+
+@{
+    ViewData["Title"] = "Nhập bảng điểm";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h3>Nhập điểm @Model.ExamType</h3>
+    <h5>Lớp: <span class="text-primary">@Model.ClassName</span> - Môn: <span class="text-danger">@Model.SubjectName</span></h5>
+</div>
+
+<form asp-action="SaveGrades" method="post">
+    <input type="hidden" asp-for="ClassId" />
+    <input type="hidden" asp-for="SubjectId" />
+    <input type="hidden" asp-for="ExamType" />
+    <input type="hidden" asp-for="ClassName" />
+    <input type="hidden" asp-for="SubjectName" />
+
+    <table class="table table-bordered table-striped mt-3">
+        <thead class="table-dark">
+            <tr>
+                <th width="5%">STT</th>
+                <th width="15%">Mã HS</th>
+                <th>Họ và Tên</th>
+                <th width="20%">Điểm số</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Students.Count; i++)
+            {
+                <tr>
+                    <td class="text-center">@(i + 1)</td>
+                    <td>@Model.Students[i].StudentCode</td>
+                    <td>
+                        @Model.Students[i].FullName
+                        <input type="hidden" asp-for="Students[i].StudentId" />
+                        <input type="hidden" asp-for="Students[i].StudentCode" />
+                        <input type="hidden" asp-for="Students[i].FullName" />
+                    </td>
+                    <td>
+                        <input type="number" step="0.1" min="0" max="10"
+                               class="form-control text-center text-danger fw-bold"
+                               asp-for="Students[i].Score"
+                               placeholder="--" />
+                        <span asp-validation-for="Students[i].Score" class="text-danger"></span>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Lưu bảng điểm</button>
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
