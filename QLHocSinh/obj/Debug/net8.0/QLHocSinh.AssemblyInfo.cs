@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("QLHocSinh")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+83b0df29822a6627606c1ace04c0a0f672e1db78")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aba7d08a51b149957fd2e59063c2879a0d41e4cd")]
 [assembly: System.Reflection.AssemblyProductAttribute("QLHocSinh")]
 [assembly: System.Reflection.AssemblyTitleAttribute("QLHocSinh")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

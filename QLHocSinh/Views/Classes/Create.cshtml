@@ -1,0 +1,32 @@
+﻿@model Class
+
+@{
+    ViewData["Title"] = "Thêm Lớp học";
+}
+
+<h1>Thêm Lớp Học Mới</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="ClassName" class="control-label">Tên lớp</label>
+                <input asp-for="ClassName" class="form-control" placeholder="VD: 10A1" required />
+                <span asp-validation-for="ClassName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="SchoolYear" class="control-label">Năm học</label>
+                <input asp-for="SchoolYear" class="form-control" placeholder="VD: 2023-2024" required />
+                <span asp-validation-for="SchoolYear" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Tạo mới" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-secondary">Quay lại danh sách</a>
+            </div>
+        </form>
+    </div>
+</div>
