@@ -4,34 +4,52 @@
     ViewData["Title"] = "Quản lý Học sinh";
 }
 
-<div class="card shadow-sm border-0 mt-4">
-    <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
-        <h4 class="mb-0 text-primary fw-bold">
-            <i class="bi bi-people-fill me-2"></i>Danh sách Học sinh
-        </h4>
-        <form method="get" asp-action="Index" class="mb-4">
-            <div class="row g-2">
-                <div class="col-md-3">
-                    <select name="classId" class="form-select" asp-items="ViewBag.Classes">
-                        <option value="">-- Tất cả lớp --</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <input type="text" name="searchString" class="form-control" placeholder="Tìm theo tên hoặc mã HS..." value="@ViewBag.CurrentSearch" />
-                </div>
-                <div class="col-md-2">
-                    <button type="submit" class="btn btn-secondary w-100"><i class="bi bi-search"></i> Lọc / Tìm</button>
-                </div>
-                <div class="col-md-3 text-end">
-                    <a asp-action="Create" class="btn btn-primary">Thêm học sinh</a>
-                </div>
+<div class="card shadow border-0 mt-4 rounded-3">
+    <!-- HEADER -->
+    <div class="card-header bg-white py-3">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+            <h4 class="mb-0 text-primary fw-bold">
+                <i class="bi bi-people-fill me-2"></i>Danh sách Học sinh
+            </h4>
+
+            <a asp-action="Create" class="btn btn-primary px-3">
+                <i class="bi bi-plus-circle me-1"></i> Thêm học sinh
+            </a>
+        </div>
+
+        <!-- FILTER -->
+        <form method="get" asp-action="Index" class="row g-2 mt-3">
+            <div class="col-md-3">
+                <select name="classId" class="form-select" asp-items="ViewBag.Classes">
+                    <option value="">-- Tất cả lớp --</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <input type="text" name="searchString" class="form-control"
+                       placeholder="🔍 Tìm theo tên hoặc mã HS..."
+                       value="@ViewBag.CurrentSearch" />
+            </div>
+
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-secondary w-100">
+                    <i class="bi bi-funnel"></i> Lọc
+                </button>
+            </div>
+
+            <div class="col-md-2">
+                <a asp-action="Index" class="btn btn-outline-secondary w-100">
+                    <i class="bi bi-arrow-clockwise"></i> Reset
+                </a>
             </div>
         </form>
     </div>
+
+    <!-- BODY -->
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
-                <thead class="table-light text-muted">
+                <thead class="table-light text-muted small text-uppercase">
                     <tr>
                         <th class="ps-4">Mã HS</th>
                         <th>Họ và tên</th>
@@ -41,13 +59,14 @@
                         <th class="text-center">Hành động</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     @if (!Model.Any())
                     {
                         <tr>
-                            <td colspan="6" class="text-center py-4 text-muted">
-                                <i class="bi bi-inbox fs-2 d-block mb-2"></i>
-                                Chưa có dữ liệu học sinh.
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                                <span class="fs-5">Chưa có dữ liệu học sinh</span>
                             </td>
                         </tr>
                     }
@@ -56,33 +75,55 @@
                         foreach (var item in Model)
                         {
                             <tr>
-                                <td class="ps-4 fw-medium text-primary">@item.StudentCode</td>
-                                <td class="fw-bold">@item.FullName</td>
-                                <td>@item.DateOfBirth.ToString("dd/MM/yyyy")</td>
+                                <td class="ps-4 fw-semibold text-primary">
+                                    @item.StudentCode
+                                </td>
+
+                                <td class="fw-bold">
+                                    @item.FullName
+                                </td>
+
+                                <td>
+                                    @item.DateOfBirth.ToString("dd/MM/yyyy")
+                                </td>
+
                                 <td>
                                     @if (item.Class != null)
                                     {
-                                        <span class="badge bg-info text-dark bg-opacity-25 border border-info px-2 py-1">@item.Class.ClassName</span>
+                                        <span class="badge bg-info bg-opacity-25 text-dark border border-info px-3 py-1 rounded-pill">
+                                            @item.Class.ClassName
+                                        </span>
                                     }
                                     else
                                     {
-                                        <span class="text-muted fst-italic">Chưa xếp lớp</span>
+                                        <span class="text-muted fst-italic">
+                                            Chưa xếp lớp
+                                        </span>
                                     }
                                 </td>
-                                <td>@(item.Parent != null ? item.Parent.FullName : "Chưa gắn")</td>
+
+                                <td>
+                                    @(item.Parent != null ? item.Parent.FullName :
+                                        "<span class='text-muted fst-italic'>Chưa gắn</span>")
+                                </td>
+
                                 <td class="text-center">
-                                    <div class="d-flex justify-content-center gap-1">
-                                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-outline-info" title="Chi tiết">
-                                            <i class="bi bi-eye"></i> <span class="d-none d-md-inline">Chi tiết</span>
+                                    <div class="btn-group" role="group">
+                                        <a asp-action="Details" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-info" title="Chi tiết">
+                                            <i class="bi bi-eye"></i>
                                         </a>
 
-                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-warning" title="Sửa">
-                                            <i class="bi bi-pencil-square"></i> <span class="d-none d-md-inline">Sửa</span>
+                                        <a asp-action="Edit" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-warning" title="Sửa">
+                                            <i class="bi bi-pencil-square"></i>
                                         </a>
 
-                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger"
-                                           onclick="return confirm('Bạn có chắc chắn muốn xóa học sinh này không?');" title="Xóa">
-                                            <i class="bi bi-trash"></i> <span class="d-none d-md-inline">Xóa</span>
+                                        <a asp-action="Delete" asp-route-id="@item.Id"
+                                           class="btn btn-sm btn-outline-danger"
+                                           onclick="return confirm('Bạn có chắc chắn muốn xóa học sinh này không?');"
+                                           title="Xóa">
+                                            <i class="bi bi-trash"></i>
                                         </a>
                                     </div>
                                 </td>

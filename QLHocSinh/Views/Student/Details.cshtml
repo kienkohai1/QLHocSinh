@@ -39,6 +39,35 @@
     <div class="card-header bg-white py-3 border-bottom">
         <h5 class="mb-0 fw-bold"><i class="bi bi-table me-2 text-success"></i>Bảng điểm chi tiết</h5>
     </div>
+
+    <div class="card-body bg-light border-bottom p-3">
+        <form method="get" asp-action="Details" class="row g-2 align-items-center mb-0">
+            <input type="hidden" name="id" value="@Model.Id" />
+
+            <div class="col-md-4">
+                <select name="academicYear" class="form-select">
+                    <option value="">-- Tất cả năm học --</option>
+                    <option value="2022-2023" selected="@(ViewBag.CurrentYear == "2022-2023")">2022 - 2023</option>
+                    <option value="2023-2024" selected="@(ViewBag.CurrentYear == "2023-2024")">2023 - 2024</option>
+                    <option value="2024-2025" selected="@(ViewBag.CurrentYear == "2024-2025")">2024 - 2025</option>
+                    <option value="2025-2026" selected="@(ViewBag.CurrentYear == "2025-2026")">2025 - 2026</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <select name="semester" class="form-select">
+                    <option value="">-- Tất cả học kỳ --</option>
+                    <option value="1" selected="@(ViewBag.CurrentSemester == 1)">Học kỳ 1</option>
+                    <option value="2" selected="@(ViewBag.CurrentSemester == 2)">Học kỳ 2</option>
+                </select>
+            </div>
+
+            <div class="col-md-4">
+                <button type="submit" class="btn btn-primary"><i class="bi bi-filter"></i> Lọc điểm</button>
+                <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-outline-primary">Hủy lọc</a>
+            </div>
+        </form>
+    </div>
     <div class="card-body p-0">
         <div class="table-responsive">
             <table class="table table-hover table-striped align-middle mb-0">
