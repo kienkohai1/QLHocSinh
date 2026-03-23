@@ -1,0 +1,85 @@
+﻿@model Student
+
+@{
+    ViewData["Title"] = "Hồ sơ cá nhân";
+}
+
+<div class="container-fluid mt-4">
+    <h2 class="mb-4">Hồ sơ học sinh</h2>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Thông tin cá nhân</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Mã HS:</strong> @Model.StudentCode</p>
+                    <p><strong>Họ và tên:</strong> @Model.FullName</p>
+                    <p><strong>Ngày sinh:</strong> @Model.DateOfBirth.ToString("dd/MM/yyyy")</p>
+                    <p><strong>Lớp:</strong> @(Model.Class?.ClassName ?? "Chưa có dữ liệu")</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Kết quả học tập</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover table-bordered mb-0 text-center">
+                            <thead class="table-light">
+                                <tr>
+                                    <th class="text-start">Môn học</th>
+                                    <th>Điểm miệng</th>
+                                    <th>Điểm 15p</th>
+                                    <th>Điểm giữa kỳ</th>
+                                    <th>Điểm cuối kỳ</th>
+                                    <th>Điểm TB</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var groupedGrades = Model.Grades.GroupBy(g => g.Subject?.Name ?? "N/A");
+
+                                    foreach (var subjectGroup in groupedGrades)
+                                    {
+                                        var mieng = subjectGroup.FirstOrDefault(g => g.ExamType == "Miệng")?.Score;
+                                        var p15 = subjectGroup.FirstOrDefault(g => g.ExamType == "15p")?.Score;
+                                        var giuaky = subjectGroup.FirstOrDefault(g => g.ExamType == "Giữa kỳ")?.Score;
+                                        var cuoiky = subjectGroup.FirstOrDefault(g => g.ExamType == "Cuối kỳ")?.Score;
+
+                                        double? dtb = null;
+                                        int heSoTichLuy = 0;
+                                        double tongDiem = 0;
+
+                                        if (mieng.HasValue) { tongDiem += mieng.Value; heSoTichLuy += 1; }
+                                        if (p15.HasValue) { tongDiem += p15.Value; heSoTichLuy += 1; }
+                                        if (giuaky.HasValue) { tongDiem += giuaky.Value * 2; heSoTichLuy += 2; }
+                                        if (cuoiky.HasValue) { tongDiem += cuoiky.Value * 3; heSoTichLuy += 3; }
+
+                                        if (heSoTichLuy > 0)
+                                        {
+                                            dtb = Math.Round(tongDiem / heSoTichLuy, 1);
+                                        }
+
+                                        <tr>
+                                            <td class="text-start fw-bold">@subjectGroup.Key</td>
+                                            <td>@mieng</td>
+                                            <td>@p15</td>
+                                            <td>@giuaky</td>
+                                            <td>@cuoiky</td>
+                                            <td class="text-danger fw-bold">@dtb</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

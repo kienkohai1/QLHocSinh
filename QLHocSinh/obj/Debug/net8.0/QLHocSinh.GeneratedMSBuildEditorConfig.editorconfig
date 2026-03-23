@@ -44,8 +44,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5cUmVzZXRQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/khacb/source/repos/QLHocSinh/QLHocSinh/Views/Grade/Enter.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3JhZGVcRW50ZXIuY3NodG1s
+[C:/Users/khacb/source/repos/QLHocSinh/QLHocSinh/Views/Grade/GradeBook.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3JhZGVcR3JhZGVCb29rLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/khacb/source/repos/QLHocSinh/QLHocSinh/Views/Grade/Index.cshtml]
@@ -58,6 +58,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/khacb/source/repos/QLHocSinh/QLHocSinh/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxQcml2YWN5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/khacb/source/repos/QLHocSinh/QLHocSinh/Views/Profile/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZmlsZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/khacb/source/repos/QLHocSinh/QLHocSinh/Views/Shared/Error.cshtml]

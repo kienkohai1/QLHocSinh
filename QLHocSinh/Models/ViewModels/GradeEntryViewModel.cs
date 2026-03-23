@@ -1,34 +1,32 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace QLHocSinh.Models.ViewModels
+public class GradeBookViewModel
 {
-    public class GradeEntryViewModel
-    {
-        [Required]
-        public int ClassId { get; set; }
+    public int ClassId { get; set; }
+    public int SubjectId { get; set; }
 
-        [Required]
-        public int SubjectId { get; set; }
+    public string ClassName { get; set; } = "";
+    public string SubjectName { get; set; } = "";
 
-        [Required]
-        public string ExamType { get; set; }
+    public List<StudentGradeRow> Students { get; set; } = new();
 
-        public string ClassName { get; set; }
-        public string SubjectName { get; set; }
+    // Để tính trung bình nếu cần
+    public bool ShowAverage { get; set; } = true;
+}
 
-        // Danh sách học sinh để nhập điểm
-        public List<StudentScoreItem> Students { get; set; } = new List<StudentScoreItem>();
-    }
+public class StudentGradeRow
+{
+    public int StudentId { get; set; }
+    public string StudentCode { get; set; } = "";
+    public string FullName { get; set; } = "";
 
-    public class StudentScoreItem
-    {
-        public int StudentId { get; set; }
-        public string StudentCode { get; set; }
-        public string FullName { get; set; }
+    public double? Mieng { get; set; }
+    public double? _15p { get; set; }
+    public double? GiuaKy { get; set; }
+    public double? CuoiKy { get; set; }
 
-        // Dùng nullable double (?) để biết học sinh nào chưa được nhập điểm
-        [Range(0, 10, ErrorMessage = "Điểm phải từ 0 đến 10")]
-        public double? Score { get; set; }
-    }
+    // Tính trung bình (tùy trọng số - ví dụ minh họa)
+    public double? TrungBinh =>
+        (Mieng + _15p + GiuaKy * 2 + CuoiKy * 3) / 7;  // điều chỉnh trọng số theo quy định trường
 }

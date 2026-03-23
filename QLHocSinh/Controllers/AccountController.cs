@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using QLHocSinh.Models.ViewModels;
 
 namespace QLHocSinh.Controllers
 {
+
     public class AccountController : Controller
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -39,7 +41,7 @@ namespace QLHocSinh.Controllers
                         return RedirectToAction("MyClasses", "Teacher"); // Giả định bạn có TeacherController
 
                     if (roles.Contains("Parent"))
-                        return RedirectToAction("ViewGrades", "Student"); // Giả định bạn có StudentController
+                        return RedirectToAction("Index", "Profile");
 
                     return RedirectToAction("Index", "Home");
                 }

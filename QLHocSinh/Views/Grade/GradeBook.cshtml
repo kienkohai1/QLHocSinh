@@ -1,0 +1,60 @@
+﻿@model GradeBookViewModel
+
+@{
+    ViewData["Title"] = "Bảng điểm môn học";
+}
+
+<h3>Bảng điểm môn <span class="text-danger">@Model.SubjectName</span> - Lớp <span class="text-primary">@Model.ClassName</span></h3>
+
+<form asp-action="SaveGradeBook" method="post">
+    <input type="hidden" asp-for="ClassId" />
+    <input type="hidden" asp-for="SubjectId" />
+    <input type="hidden" asp-for="ClassName" />
+    <input type="hidden" asp-for="SubjectName" />
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>STT</th>
+                <th>Mã HS</th>
+                <th>Họ và tên</th>
+                <th>Miệng</th>
+                <th>15'</th>
+                <th>Giữa kỳ</th>
+                <th>Cuối kỳ</th>
+                @if (Model.ShowAverage)
+                {
+                    <th>Trung bình</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Students.Count; i++)
+            {
+                <tr>
+                    <td>@(i + 1)</td>
+                    <td>@Model.Students[i].StudentCode</td>
+                    <td>
+                        @Model.Students[i].FullName
+                        <input type="hidden" asp-for="Students[i].StudentId" />
+                        <input type="hidden" asp-for="Students[i].StudentCode" />
+                        <input type="hidden" asp-for="Students[i].FullName" />
+                    </td>
+                    <td><input asp-for="Students[i].Mieng" class="form-control text-center" step="0.1" min="0" max="10" /></td>
+                    <td><input asp-for="Students[i]._15p" class="form-control text-center" step="0.1" min="0" max="10" /></td>
+                    <td><input asp-for="Students[i].GiuaKy" class="form-control text-center" step="0.1" min="0" max="10" /></td>
+                    <td><input asp-for="Students[i].CuoiKy" class="form-control text-center" step="0.1" min="0" max="10" /></td>
+                    @if (Model.ShowAverage)
+                    {
+                        <td class="text-center fw-bold">
+                            @(Model.Students[i].TrungBinh?.ToString("0.0") ?? "--")
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-success">Lưu bảng điểm</button>
+    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+</form>
