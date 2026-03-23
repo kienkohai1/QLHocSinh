@@ -44,7 +44,9 @@
             <table class="table table-hover table-striped align-middle mb-0">
                 <thead class="table-light">
                     <tr>
-                        <th class="ps-4 w-25">Môn học</th>
+                        <th class="ps-4">Năm học</th>
+                        <th>HK</th>
+                        <th class="w-25">Môn học</th>
                         <th>Điểm Miệng</th>
                         <th>Điểm 15p</th>
                         <th>Điểm Giữa kỳ</th>
@@ -54,12 +56,20 @@
                 <tbody>
                     @if (Model.Grades != null && Model.Grades.Any())
                     {
-                        var groupedGrades = Model.Grades.GroupBy(g => g.Subject).ToList();
+                        // Nhóm theo Năm học, Học kỳ, Môn học
+                        var groupedGrades = Model.Grades
+                        .GroupBy(g => new { g.AcademicYear, g.Semester, g.Subject })
+                        .OrderByDescending(g => g.Key.AcademicYear)
+                        .ThenByDescending(g => g.Key.Semester)
+                        .ThenBy(g => g.Key.Subject?.Name)
+                        .ToList();
 
                         foreach (var group in groupedGrades)
                         {
                             <tr>
-                                <td class="ps-4 fw-bold text-dark">@(group.Key?.Name ?? "Lỗi môn học")</td>
+                                <td class="ps-4 text-muted">@group.Key.AcademicYear</td>
+                                <td class="text-muted">@group.Key.Semester</td>
+                                <td class="fw-bold text-dark">@(group.Key.Subject?.Name ?? "Lỗi môn học")</td>
 
                                 <td>
                                     @foreach (var g in group.Where(x => x.ExamType == "Miệng"))
@@ -91,8 +101,8 @@
                     else
                     {
                         <tr>
-                            <td colspan="5" class="text-center py-4 text-muted">
-                                Học sinh chưa đăng ký môn học nào.
+                            <td colspan="7" class="text-center py-4 text-muted">
+                                Học sinh chưa có điểm hoặc chưa đăng ký môn học nào.
                             </td>
                         </tr>
                     }

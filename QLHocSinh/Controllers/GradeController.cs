@@ -24,9 +24,6 @@ namespace QLHocSinh.Controllers
             _userManager = userManager;
         }
 
-        // GET: Chọn lớp, môn, loại điểm
-        // ... giữ nguyên constructor và các using
-
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -42,11 +39,11 @@ namespace QLHocSinh.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GradeBook(int classId, int subjectId)
+        public async Task<IActionResult> GradeBook(int classId, int subjectId, string academicYear, int semester)
         {
-            if (classId <= 0 || subjectId <= 0)
+            if (classId <= 0 || subjectId <= 0 || string.IsNullOrEmpty(academicYear) || semester <= 0)
             {
-                TempData["ErrorMessage"] = "Vui lòng chọn lớp và môn học.";
+                TempData["ErrorMessage"] = "Vui lòng chọn đầy đủ lớp, môn học, năm học và học kỳ.";
                 return RedirectToAction(nameof(Index));
             }
 
@@ -64,16 +61,21 @@ namespace QLHocSinh.Controllers
                 .OrderBy(s => s.FullName)
                 .ToListAsync();
 
-            // Lấy tất cả điểm của môn này trong lớp (tất cả loại)
+            // Lấy tất cả điểm của môn này trong lớp (thuộc năm học và học kỳ đang chọn)
             var allGrades = await _context.Grades
-                .Where(g => g.SubjectId == subjectId && g.Student.ClassId == classId)
+                .Where(g => g.SubjectId == subjectId &&
+                            g.Student.ClassId == classId &&
+                            g.AcademicYear == academicYear &&
+                            g.Semester == semester)
                 .ToListAsync();
 
             var model = new GradeBookViewModel
             {
                 ClassId = classId,
                 SubjectId = subjectId,
-                ClassName = lop.ClassName ?? lop.ClassName ?? "N/A",
+                AcademicYear = academicYear,
+                Semester = semester,
+                ClassName = lop.ClassName ?? "N/A",
                 SubjectName = mon.Name ?? "N/A",
                 Students = students.Select(s =>
                 {
@@ -115,17 +117,17 @@ namespace QLHocSinh.Controllers
             {
                 foreach (var student in model.Students)
                 {
-                    // Xử lý từng loại điểm
-                    await SaveOrUpdateGrade(student.StudentId, model.SubjectId, "Miệng", student.Mieng, currentUserId);
-                    await SaveOrUpdateGrade(student.StudentId, model.SubjectId, "15p", student._15p, currentUserId);
-                    await SaveOrUpdateGrade(student.StudentId, model.SubjectId, "Giữa kỳ", student.GiuaKy, currentUserId);
-                    await SaveOrUpdateGrade(student.StudentId, model.SubjectId, "Cuối kỳ", student.CuoiKy, currentUserId);
+                    // Xử lý từng loại điểm, kèm theo AcademicYear và Semester
+                    await SaveOrUpdateGrade(student.StudentId, model.SubjectId, model.AcademicYear, model.Semester, "Miệng", student.Mieng, currentUserId);
+                    await SaveOrUpdateGrade(student.StudentId, model.SubjectId, model.AcademicYear, model.Semester, "15p", student._15p, currentUserId);
+                    await SaveOrUpdateGrade(student.StudentId, model.SubjectId, model.AcademicYear, model.Semester, "Giữa kỳ", student.GiuaKy, currentUserId);
+                    await SaveOrUpdateGrade(student.StudentId, model.SubjectId, model.AcademicYear, model.Semester, "Cuối kỳ", student.CuoiKy, currentUserId);
                 }
 
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
 
-                TempData["SuccessMessage"] = $"Đã lưu bảng điểm môn {model.SubjectName} lớp {model.ClassName} thành công!";
+                TempData["SuccessMessage"] = $"Đã lưu bảng điểm môn {model.SubjectName} lớp {model.ClassName} (HK{model.Semester} - {model.AcademicYear}) thành công!";
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
@@ -136,11 +138,13 @@ namespace QLHocSinh.Controllers
             }
         }
 
-        private async Task SaveOrUpdateGrade(int studentId, int subjectId, string examType, double? score, string teacherId)
+        private async Task SaveOrUpdateGrade(int studentId, int subjectId, string academicYear, int semester, string examType, double? score, string teacherId)
         {
             var grade = await _context.Grades
                 .FirstOrDefaultAsync(g => g.StudentId == studentId &&
                                           g.SubjectId == subjectId &&
+                                          g.AcademicYear == academicYear &&
+                                          g.Semester == semester &&
                                           g.ExamType == examType);
 
             if (score.HasValue)
@@ -158,6 +162,8 @@ namespace QLHocSinh.Controllers
                     {
                         StudentId = studentId,
                         SubjectId = subjectId,
+                        AcademicYear = academicYear,
+                        Semester = semester,
                         ExamType = examType,
                         Score = score.Value,
                         TeacherId = teacherId,
@@ -172,4 +178,4 @@ namespace QLHocSinh.Controllers
             }
         }
     }
-    }
+}

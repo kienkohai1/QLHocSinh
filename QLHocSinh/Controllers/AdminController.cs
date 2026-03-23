@@ -18,9 +18,7 @@ namespace QLHocSinh.Controllers
             _roleManager = roleManager;
         }
 
-        // ==========================================
         // 1. TRANG CHỦ ADMIN (DASHBOARD)
-        // ==========================================
         [HttpGet]
         public IActionResult Index()
         {
@@ -28,9 +26,7 @@ namespace QLHocSinh.Controllers
             return View();
         }
 
-        // ==========================================
         // 2. TẠO NGƯỜI DÙNG MỚI
-        // ==========================================
         [HttpGet]
         public IActionResult CreateUser()
         {
@@ -76,9 +72,7 @@ namespace QLHocSinh.Controllers
             model.RoleList = _roleManager.Roles.Select(r => new SelectListItem { Text = r.Name, Value = r.Name }).ToList();
             return View(model);
         }
-        // ==========================================
         // 3. QUẢN LÝ DANH SÁCH TÀI KHOẢN (KHÔNG DÙNG VIEWMODEL)
-        // ==========================================
         [HttpGet]
         public IActionResult ManageUsers()
         {
@@ -87,9 +81,7 @@ namespace QLHocSinh.Controllers
             return View(users);
         }
 
-        // ==========================================
         // 4. CHỈNH SỬA TÀI KHOẢN
-        // ==========================================
         [HttpGet]
         public async Task<IActionResult> EditUser(string id)
         {
@@ -136,9 +128,7 @@ namespace QLHocSinh.Controllers
             return RedirectToAction("ManageUsers");
         }
 
-        // ==========================================
         // 5. ĐẶT LẠI MẬT KHẨU (RESET PASSWORD)
-        // ==========================================
         [HttpGet]
         public async Task<IActionResult> ResetPassword(string id)
         {
@@ -164,9 +154,7 @@ namespace QLHocSinh.Controllers
             return RedirectToAction("ManageUsers");
         }
 
-        // ==========================================
         // 6. XÓA TÀI KHOẢN
-        // ==========================================
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteUser(string id)

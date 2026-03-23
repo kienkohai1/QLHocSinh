@@ -32,6 +32,8 @@
                         <table class="table table-hover table-bordered mb-0 text-center">
                             <thead class="table-light">
                                 <tr>
+                                    <th class="text-start">Năm học</th>
+                                    <th>HK</th>
                                     <th class="text-start">Môn học</th>
                                     <th>Điểm miệng</th>
                                     <th>Điểm 15p</th>
@@ -42,7 +44,17 @@
                             </thead>
                             <tbody>
                                 @{
-                                    var groupedGrades = Model.Grades.GroupBy(g => g.Subject?.Name ?? "N/A");
+                                    // Nhóm theo Năm học, Học kỳ và Môn học
+                                    var groupedGrades = Model.Grades
+                                    .GroupBy(g => new
+                                    {
+                                        Year = g.AcademicYear,
+                                        Sem = g.Semester,
+                                        SubjectName = g.Subject?.Name ?? "N/A"
+                                    })
+                                    .OrderByDescending(g => g.Key.Year)
+                                    .ThenByDescending(g => g.Key.Sem)
+                                    .ThenBy(g => g.Key.SubjectName);
 
                                     foreach (var subjectGroup in groupedGrades)
                                     {
@@ -66,7 +78,9 @@
                                         }
 
                                         <tr>
-                                            <td class="text-start fw-bold">@subjectGroup.Key</td>
+                                            <td class="text-start">@subjectGroup.Key.Year</td>
+                                            <td>@subjectGroup.Key.Sem</td>
+                                            <td class="text-start fw-bold">@subjectGroup.Key.SubjectName</td>
                                             <td>@mieng</td>
                                             <td>@p15</td>
                                             <td>@giuaky</td>

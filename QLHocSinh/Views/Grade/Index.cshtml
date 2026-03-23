@@ -1,6 +1,23 @@
 ﻿<form asp-action="GradeBook" method="get">
     <div class="row g-3">
-        <div class="col-md-4">
+        <div class="col-md-2">
+            <label>Năm học</label>
+            <select name="academicYear" class="form-select" required>
+                <option value="">-- Chọn năm --</option>
+                <option value="2023-2024">2023-2024</option>
+                <option value="2024-2025">2024-2025</option>
+                <option value="2025-2026">2025-2026</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <label>Học kỳ</label>
+            <select name="semester" class="form-select" required>
+                <option value="">-- Học kỳ --</option>
+                <option value="1">Học kỳ 1</option>
+                <option value="2">Học kỳ 2</option>
+            </select>
+        </div>
+        <div class="col-md-3">
             <label>Lớp học</label>
             <select name="classId" class="form-select" required>
                 <option value="">-- Chọn lớp --</option>
@@ -10,7 +27,7 @@
                 }
             </select>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <label>Môn học</label>
             <select name="subjectId" class="form-select" required>
                 <option value="">-- Chọn môn --</option>
@@ -20,8 +37,8 @@
                 }
             </select>
         </div>
-        <div class="col-md-4 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary w-100">Xem / Nhập điểm</button>
+        <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Xem / Nhập</button>
         </div>
     </div>
 </form>

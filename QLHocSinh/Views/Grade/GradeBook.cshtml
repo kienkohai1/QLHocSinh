@@ -4,15 +4,22 @@
     ViewData["Title"] = "Bảng điểm môn học";
 }
 
-<h3>Bảng điểm môn <span class="text-danger">@Model.SubjectName</span> - Lớp <span class="text-primary">@Model.ClassName</span></h3>
+<h3>
+    Bảng điểm môn <span class="text-danger">@Model.SubjectName</span> - Lớp <span class="text-primary">@Model.ClassName</span>
+    <br />
+    <small class="text-muted">Học kỳ @Model.Semester - Năm học @Model.AcademicYear</small>
+</h3>
 
 <form asp-action="SaveGradeBook" method="post">
+    <input type="hidden" asp-for="AcademicYear" />
+    <input type="hidden" asp-for="Semester" />
+
     <input type="hidden" asp-for="ClassId" />
     <input type="hidden" asp-for="SubjectId" />
     <input type="hidden" asp-for="ClassName" />
     <input type="hidden" asp-for="SubjectName" />
 
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover mt-3">
         <thead class="table-dark">
             <tr>
                 <th>STT</th>
@@ -46,7 +53,7 @@
                     <td><input asp-for="Students[i].CuoiKy" class="form-control text-center" step="0.1" min="0" max="10" /></td>
                     @if (Model.ShowAverage)
                     {
-                        <td class="text-center fw-bold">
+                        <td class="text-center fw-bold align-middle">
                             @(Model.Students[i].TrungBinh?.ToString("0.0") ?? "--")
                         </td>
                     }
@@ -55,6 +62,8 @@
         </tbody>
     </table>
 
-    <button type="submit" class="btn btn-success">Lưu bảng điểm</button>
-    <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    <div class="mt-3">
+        <button type="submit" class="btn btn-success">Lưu bảng điểm</button>
+        <a asp-action="Index" class="btn btn-secondary">Quay lại</a>
+    </div>
 </form>

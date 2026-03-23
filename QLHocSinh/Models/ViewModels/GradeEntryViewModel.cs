@@ -6,6 +6,10 @@ public class GradeBookViewModel
     public int ClassId { get; set; }
     public int SubjectId { get; set; }
 
+    // Thêm trường để bind từ view lên
+    public string AcademicYear { get; set; } = "";
+    public int Semester { get; set; }
+
     public string ClassName { get; set; } = "";
     public string SubjectName { get; set; } = "";
 
@@ -26,7 +30,6 @@ public class StudentGradeRow
     public double? GiuaKy { get; set; }
     public double? CuoiKy { get; set; }
 
-    // Tính trung bình (tùy trọng số - ví dụ minh họa)
     public double? TrungBinh =>
-        (Mieng + _15p + GiuaKy * 2 + CuoiKy * 3) / 7;  // điều chỉnh trọng số theo quy định trường
+        (Mieng + _15p + GiuaKy * 2 + CuoiKy * 3) / 7;
 }

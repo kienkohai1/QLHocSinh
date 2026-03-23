@@ -20,19 +20,34 @@ namespace QLHocSinh.Controllers
             _userManager = userManager;
         }
 
-        // 1. DANH SÁCH HỌC SINH
+        // 1. DANH SÁCH HỌC SINH (Đã thêm lọc theo Lớp và Tìm kiếm)
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? classId, string? searchString)
         {
-            var students = await _context.Students
+            var query = _context.Students
                 .Include(s => s.Class)
                 .Include(s => s.Parent)
-                .ToListAsync();
+                .AsQueryable();
+
+            if (classId.HasValue && classId > 0)
+            {
+                query = query.Where(s => s.ClassId == classId);
+            }
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                query = query.Where(s => s.FullName.Contains(searchString) || s.StudentCode.Contains(searchString));
+            }
+
+            ViewBag.Classes = new SelectList(await _context.Classes.ToListAsync(), "Id", "ClassName", classId);
+            ViewBag.CurrentSearch = searchString;
+
+            var students = await query.ToListAsync();
             return View(students);
         }
 
-        // GET: Student/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // 2. CHI TIẾT HỌC SINH (Đã thêm lọc điểm theo Năm học, Học kỳ)
+        public async Task<IActionResult> Details(int? id, string? academicYear, int? semester)
         {
             if (id == null) return NotFound();
 
@@ -44,34 +59,45 @@ namespace QLHocSinh.Controllers
 
             if (student == null) return NotFound();
 
-            // Chỉ cần chuẩn bị danh sách Môn học
+            // Lọc điểm trong bộ nhớ
+            if (!string.IsNullOrEmpty(academicYear))
+            {
+                student.Grades = student.Grades.Where(g => g.AcademicYear == academicYear).ToList();
+            }
+            if (semester.HasValue && semester.Value > 0)
+            {
+                student.Grades = student.Grades.Where(g => g.Semester == semester.Value).ToList();
+            }
+
             ViewBag.Subjects = new SelectList(await _context.Subjects.ToListAsync(), "Id", "Name");
+            ViewBag.CurrentYear = academicYear;
+            ViewBag.CurrentSemester = semester;
 
             return View(student);
         }
 
-        // POST: Xử lý form từ Modal Thêm Môn Học
+        // POST: Xử lý form từ Modal Thêm Môn Học (Cập nhật lưu theo Năm và Học kỳ)
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AddSubject(int studentId, int subjectId)
+        public async Task<IActionResult> AddSubject(int studentId, int subjectId, string academicYear, int semester)
         {
             var student = await _context.Students.FindAsync(studentId);
             if (student == null) return NotFound();
 
-            // Kiểm tra xem học sinh đã có môn học này trong bảng điểm chưa để tránh thêm trùng
             var alreadyExists = await _context.Grades
-                .AnyAsync(g => g.StudentId == studentId && g.SubjectId == subjectId);
+                .AnyAsync(g => g.StudentId == studentId && g.SubjectId == subjectId && g.AcademicYear == academicYear && g.Semester == semester);
 
             if (!alreadyExists)
             {
                 var teacherId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                // Tạo bản ghi "mồi" để hiển thị môn học lên bảng
                 var gradePlaceholder = new Grade
                 {
                     StudentId = studentId,
                     SubjectId = subjectId,
-                    ExamType = "Khởi tạo", // Loại điểm ảo, không hiển thị ra các cột điểm thực tế
+                    AcademicYear = academicYear,  // Thêm mới
+                    Semester = semester,          // Thêm mới
+                    ExamType = "Khởi tạo",
                     Score = 0,
                     DateCreated = DateTime.Now,
                     TeacherId = teacherId ?? ""
@@ -81,9 +107,9 @@ namespace QLHocSinh.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToAction(nameof(Details), new { id = studentId });
+            // Quay lại trang Details và giữ nguyên bộ lọc
+            return RedirectToAction(nameof(Details), new { id = studentId, academicYear, semester });
         }
-
         // 3. THÊM MỚI HỌC SINH (GET)
         [HttpGet]
         public async Task<IActionResult> Create()
@@ -92,12 +118,10 @@ namespace QLHocSinh.Controllers
             return View();
         }
 
-        // 3. THÊM MỚI HỌC SINH (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Student student, string? NewParentFullName, string? NewParentEmail)
         {
-            // Bước A: Xử lý tạo tài khoản phụ huynh mới nếu có thông tin nhập vào
             if (!string.IsNullOrEmpty(NewParentEmail) && !string.IsNullOrEmpty(NewParentFullName))
             {
                 var existingUser = await _userManager.FindByEmailAsync(NewParentEmail);
@@ -108,14 +132,14 @@ namespace QLHocSinh.Controllers
                         UserName = NewParentEmail,
                         Email = NewParentEmail,
                         FullName = NewParentFullName,
-                        UserRole = "Parent" // Gán giá trị tránh lỗi SqlException
+                        UserRole = "Parent"
                     };
 
                     var result = await _userManager.CreateAsync(newParent, "Parent@123");
                     if (result.Succeeded)
                     {
                         await _userManager.AddToRoleAsync(newParent, "Parent");
-                        student.ParentId = newParent.Id; // Gán ID vừa tạo cho học sinh
+                        student.ParentId = newParent.Id;
                     }
                     else
                     {
@@ -127,17 +151,15 @@ namespace QLHocSinh.Controllers
                 }
                 else
                 {
-                    student.ParentId = existingUser.Id; // Nếu email đã tồn tại, dùng ID đó
+                    student.ParentId = existingUser.Id;
                 }
             }
 
-            // Bước B: Kiểm tra trùng mã học sinh
             if (_context.Students.Any(s => s.StudentCode == student.StudentCode))
             {
                 ModelState.AddModelError("StudentCode", "Mã học sinh này đã tồn tại.");
             }
 
-            // Bước C: Loại bỏ Validation cho các Object liên kết (vì form chỉ gửi ID)
             ModelState.Remove("Parent");
             ModelState.Remove("Class");
             ModelState.Remove("Grades");
@@ -156,25 +178,20 @@ namespace QLHocSinh.Controllers
                 }
             }
 
-            // Nếu dữ liệu không hợp lệ, nạp lại Dropdown và trả về View
             await PrepareViewData(student.ClassId, student.ParentId);
             return View(student);
         }
 
-        // 4. CHỈNH SỬA (GET)
         [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
-
             var student = await _context.Students.FindAsync(id);
             if (student == null) return NotFound();
-
             await PrepareViewData(student.ClassId, student.ParentId);
             return View(student);
         }
 
-        // 4. CHỈNH SỬA (POST)
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Student student)
@@ -202,7 +219,6 @@ namespace QLHocSinh.Controllers
             return View(student);
         }
 
-        // 5. XÓA (GET)
         [HttpGet]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -217,7 +233,6 @@ namespace QLHocSinh.Controllers
             return View(student);
         }
 
-        // 5. XÓA (POST)
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -231,11 +246,9 @@ namespace QLHocSinh.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // HÀM HỖ TRỢ: Nạp danh sách cho Dropdown
         private async Task PrepareViewData(int? selectedClass = null, string? selectedParent = null)
         {
             ViewData["ClassId"] = new SelectList(_context.Classes, "Id", "ClassName", selectedClass);
-
             var parents = await _userManager.GetUsersInRoleAsync("Parent");
             ViewData["ParentId"] = new SelectList(parents, "Id", "FullName", selectedParent);
         }
